@@ -2,7 +2,7 @@ go-walk
 =======
 
 <p align="center">
-  <img src="https://github.com/while-loop/go-walk/blob/master/resources/logo.png">
+  <img src="https://github.com/while-loop/go-walk/blob/master/resources/gopherwalk.png">
   <br><br><br>
   <a href="https://godoc.org/github.com/while-loop/go-walk/walk"><img src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"></a>
   <a href="https://travis-ci.org/while-loop/go-walk"><img src="https://img.shields.io/travis/while-loop/go-walk.svg?style=flat-square"></a>
