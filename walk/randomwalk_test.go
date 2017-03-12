@@ -14,7 +14,7 @@ func TestConstructorSetsVals(t *testing.T) {
 	assert.Equal(t, r, rw.Right)
 	assert.Equal(t, u, rw.Up)
 	assert.Equal(t, d, rw.Down)
-	assert.Nil(t, rw.walker)
+	assert.Nil(t, rw.Walker)
 }
 
 func TestInterfaceCallsMethods(t *testing.T) {

@@ -6,10 +6,12 @@ import (
 	"errors"
 )
 
+// Weight of a direction
 type Weight uint32
 
 type weights *[4]Weight
 
+// Functions to execute when a direction is chosen
 type Walker interface {
 	Left()
 	Right()
@@ -18,6 +20,7 @@ type Walker interface {
 }
 
 const (
+	// No need to make these public
 	lEFT  = 0
 	rIGHT = 1
 	uP    = 2
@@ -27,14 +30,17 @@ const (
 var r *rand.Rand // your private random
 
 func init() {
+	// set up the random seed for our code
 	r = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
+// Random Walk configuration
 type RandomWalk struct {
 	Left, Right, Up, Down Weight
-	walker                Walker
+	Walker                Walker
 }
 
+// Create new Random Walk with custom probabilities for each direction
 func NewRandomWalk(left, right, up, down Weight, walker Walker) *RandomWalk {
 	return &RandomWalk{left, right, up, down, walker}
 }
@@ -57,7 +63,7 @@ func (w RandomWalk) preprocess() (weights, uint64) {
 //
 // Error is return if walker implementation was not set
 func (w *RandomWalk) Walk(iterations uint32) error {
-	if w.walker == nil {
+	if w.Walker == nil {
 		return errors.New("Walker implemenation not set")
 	}
 
@@ -66,16 +72,16 @@ func (w *RandomWalk) Walk(iterations uint32) error {
 
 		switch getRandy(ws, sum) {
 		case lEFT:
-			w.walker.Left()
+			w.Walker.Left()
 			break
 		case rIGHT:
-			w.walker.Right()
+			w.Walker.Right()
 			break
 		case uP:
-			w.walker.Up()
+			w.Walker.Up()
 			break
 		case dOWN:
-			w.walker.Down()
+			w.Walker.Down()
 			break
 		}
 	}
