@@ -32,7 +32,6 @@ func TestInterfaceCallsMethods(t *testing.T) {
 	assert.Equal(t, 0, mw.r, "right sums not 0")
 	assert.Equal(t, maxIts, mw.u, "up sums not maxIts")
 	assert.Equal(t, 0, mw.d, "down sums not 0")
-
 }
 
 func TestInterfaceCallsMethodsEqually(t *testing.T) {
@@ -94,7 +93,7 @@ func TestPreprocessAssignsCorrectDirEnum(t *testing.T) {
 	assert.Equal(t, uint64(l)+uint64(r)+uint64(u)+uint64(d), sum, "", l, r, u, d)
 }
 
-func TestZeroWeightsDontExecute(t *testing.T) {
+func TestPrependedZeroWeightsDontExecute(t *testing.T) {
 	maxIts := 100000
 	sums := map[int]int{
 		lEFT:  0,
@@ -110,10 +109,10 @@ func TestZeroWeightsDontExecute(t *testing.T) {
 
 	assert.Equal(t, 4, len(sums), "Unknown direction given", sums)
 
-	assert.Equal(t, 0, sums[lEFT], "left sums not 0")
-	assert.Equal(t, 0, sums[rIGHT], "right sums not 0")
-	assert.Equal(t, 0, sums[uP], "up sums not 0")
-	assert.Equal(t, maxIts, sums[dOWN], "not all dirs were down")
+	assert.Equal(t, 0, sums[lEFT], "left sums not 0", sums[lEFT])
+	assert.Equal(t, 0, sums[rIGHT], "right sums not 0", sums[rIGHT])
+	assert.Equal(t, 0, sums[uP], "up sums not 0", sums[uP])
+	assert.Equal(t, maxIts, sums[dOWN], "not all dirs were down", sums[dOWN])
 }
 
 func TestHalfWeightsDontExecute(t *testing.T) {
@@ -136,6 +135,44 @@ func TestHalfWeightsDontExecute(t *testing.T) {
 	assert.Equal(t, 0, sums[rIGHT], "right sums not 0", sums[rIGHT])
 	assert.Equal(t, 0, sums[uP], "up sums not 0", sums[uP])
 	assert.True(t, sums[dOWN] >= maxIts/3.0, "down sums not distributed", sums[dOWN], maxIts/3.0)
+}
+
+func TestZeroWeightsReturnsNegative1(t *testing.T) {
+	maxIts := 100000
+	sums := map[int]int{
+		lEFT:  0,
+		rIGHT: 0,
+		uP:    0,
+		dOWN:  0,
+	}
+
+	weights, sum := NewRandomWalk(0, 0, 0, 0, nil).preprocess()
+	for i := 0; i < maxIts; i++ {
+		sums[getRandy(weights, sum)]++
+	}
+
+	assert.Equal(t, 5, len(sums), "Unknown direction given", sums)
+
+	assert.Equal(t, maxIts, sums[-1], "-1 sums not max Its", sums[-1])
+	assert.Equal(t, 0, sums[lEFT], "left sums not 0", sums[lEFT])
+	assert.Equal(t, 0, sums[rIGHT], "right sums not 0", sums[rIGHT])
+	assert.Equal(t, 0, sums[uP], "up sums not 0", sums[uP])
+	assert.Equal(t, 0, sums[dOWN], "down sums not 0", sums[dOWN])
+}
+
+func TestZeroWeightsReturnErrorWalking(t *testing.T) {
+	maxIts := uint32(100000)
+
+	mw := &TestWalker{}
+	rw := NewRandomWalk(0, 0, 0, 0, mw)
+	err := rw.Walk(maxIts)
+	assert.Error(t, err)
+	assert.Equal(t, "Sum of weights is <= 0", err.Error())
+
+	assert.Equal(t, 0, mw.l, "left sums not 0")
+	assert.Equal(t, 0, mw.r, "right sums not 0")
+	assert.Equal(t, 0, mw.u, "up sums not 0")
+	assert.Equal(t, 0, mw.d, "down sums not 0")
 }
 
 type TestWalker struct {
