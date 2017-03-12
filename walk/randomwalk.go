@@ -68,8 +68,11 @@ func (w *RandomWalk) Walk(iterations uint32) error {
 	}
 
 	ws, sum := w.preprocess()
-	for i := uint32(0); i < iterations; i++ {
+	if sum <= 0 {
+		return errors.New("Sum of weights is <= 0")
+	}
 
+	for i := uint32(0); i < iterations; i++ {
 		switch getRandy(ws, sum) {
 		case lEFT:
 			w.Walker.Left()
@@ -91,6 +94,10 @@ func (w *RandomWalk) Walk(iterations uint32) error {
 // Get a random direction given a set of normalized weights
 // Using the Sum of Weights method
 func getRandy(ws weights, sum uint64) int {
+	if sum <= 0 {
+		return -1
+	}
+
 	randy := r.Int63n(int64(sum))
 	ttl := int64(0)
 
