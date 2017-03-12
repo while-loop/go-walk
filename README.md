@@ -11,8 +11,10 @@ go-walk
   <a href="LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"></a>
 </p>
 
-Random Walk package written in Go
+Random Walk package written in Go.
 
+Given weights, receive callbacks for
+each direction.
 
 Installation
 ------------
@@ -32,7 +34,9 @@ import (
 	"fmt"
 )
 
+// Our walker that implements walk.Walker
 type MyWalker struct {
+	// keep a counter for each direction
 	l, r, u, d int
 }
 
@@ -54,8 +58,15 @@ func (w *MyWalker) Down() {
 
 func main() {
 	mw := &MyWalker{}
+
+	// Give custom weights to each direction
+	// Left, Right, Up, Down
 	w := walk.NewRandomWalk(10, 20, 30, 100, mw)
+
+	// perform a walk with 32 iterations
 	w.Walk(32)
+
+	 // print the total amout of hits for each direction
 	fmt.Println("My Walker:", *mw)
 }
 
