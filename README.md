@@ -4,10 +4,11 @@ go-walk
 <p align="center">
   <img src="https://github.com/while-loop/go-walk/blob/master/resources/logo.png">
   <br><br><br>
-  <img src="https://img.shields.io/travis/while-loop/go-walk.svg?style=flat-square">
-  <img src="https://img.shields.io/github/release/while-loop/go-walk.svg?style=flat-square">
-  <img src="https://img.shields.io/coveralls/while-loop/go-walk.svg?style=flat-square">
-  <img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square">
+  <a href="https://godoc.org/github.com/while-loop/go-walk/walk"><img src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"></a>
+  <a href="https://travis-ci.org/while-loop/go-walk"><img src="https://img.shields.io/travis/while-loop/go-walk.svg?style=flat-square"></a>
+  <a href="https://github.com/while-loop/go-walk/releases"><img src="https://img.shields.io/github/release/while-loop/go-walk.svg?style=flat-square"></a>
+  <a href="https://coveralls.io/github/while-loop/go-walk"><img src="https://img.shields.io/coveralls/while-loop/go-walk.svg?style=flat-square"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"></a>
 </p>
 
 Random Walk package written in Go
