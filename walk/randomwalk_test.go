@@ -195,8 +195,8 @@ func TestWalkWithFuzz(t *testing.T) {
 	rw.Walker = mw
 
 	err := rw.Walk(maxIts)
-	assert.NoError(t, err, "", rw)
-	log.Println(rw, maxIts)
+	assert.NoError(t, err, "", mw, rw)
+	log.Println(mw, rw, maxIts)
 }
 
 type TestWalker struct {
