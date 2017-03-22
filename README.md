@@ -82,7 +82,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 License
 -------
-go-walk is licensed under the MIT license. See [LICENSE](LICENSE) for details.
+go-walk is licensed under the GPLv2 license. See [LICENSE](LICENSE) for details.
 
 Author
 ------
